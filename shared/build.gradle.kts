@@ -15,7 +15,12 @@ kotlin {
         }
     }
     sourceSets {
-        val commonMain by getting
+        val commonMain by getting {
+            dependencies {
+                implementation("co.touchlab:stately-common:1.1.0")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2-native-mt")
+            }
+        }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test-common"))
@@ -33,7 +38,6 @@ kotlin {
             }
         }
         val iosMain by getting {
-            
         }
         val iosTest by getting
     }
