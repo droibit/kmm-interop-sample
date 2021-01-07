@@ -29,6 +29,7 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.2-native-mt")
             }
         }
         val androidTest by getting {
