@@ -3,21 +3,35 @@ import Shared
 
 struct ContentView: View {
     
-//    @StateObject
-//    private var viewModel = SampleViewModel()
+    @StateObject
+    private var viewModel = SampleViewModel()
     
     var body: some View {
         VStack(spacing: 32) {
             VStack {
-                Text("UUID:")
+                Text("UUID(Oneshot):")
                     .font(.headline)
-                Text("1234-5678-901234")
-                    .font(.body)
+                Text(viewModel.oneshotUUID)
+                    .font(.callout)
 
-                Button("Refresh") {
-                }.padding()
+                Button("Refresh", action: viewModel.getUUID)
+                    .padding(.all, 8)
             }
+            
+            VStack {
+                Text("UUID(Streaming):")
+                    .font(.headline)
+                Text(viewModel.streamedUUID)
+                    .font(.callout)
+
+                Button(
+                    viewModel.isWatchingUUID ? "Stop" : "Start",
+                    action: viewModel.toggleWatchingUUID
+                ).padding(.all, 8)
+            }
+
         }
+        .onAppear(perform: viewModel.onAppear)
     }
 }
 

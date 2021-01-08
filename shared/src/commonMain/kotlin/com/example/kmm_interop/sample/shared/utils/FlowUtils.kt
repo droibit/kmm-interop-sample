@@ -5,6 +5,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
@@ -21,6 +22,22 @@ class CFlow<T>(
 
         onEach {
             block(it)
+        }.launchIn(CoroutineScope(dispatcher + job))
+
+        return object : Closeable {
+            override fun close() {
+                job.cancel()
+            }
+        }
+    }
+
+    fun watch(block: (T?, Throwable?) -> Unit): Closeable {
+        val job = Job()
+
+        onEach {
+            block(it, null)
+        }.catch { e ->
+            block(null, e)
         }.launchIn(CoroutineScope(dispatcher + job))
 
         return object : Closeable {

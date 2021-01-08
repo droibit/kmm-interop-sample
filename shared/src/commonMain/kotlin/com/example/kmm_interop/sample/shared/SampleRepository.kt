@@ -1,15 +1,16 @@
 package com.example.kmm_interop.sample.shared
 
+import com.example.kmm_interop.sample.shared.utils.CFlow
 import com.example.kmm_interop.sample.shared.utils.UUID
+import com.example.kmm_interop.sample.shared.utils.wrap
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 
 interface SampleRepository {
     suspend fun getUUID(): String
 
-    fun getUUIDAsFlow(): Flow<String>
+    fun getUUIDAsFlow(): CFlow<String>
 }
 
 class SampleRepositoryImpl(
@@ -23,12 +24,14 @@ class SampleRepositoryImpl(
         }
     }
 
-    override fun getUUIDAsFlow(): Flow<String> {
+    override fun getUUIDAsFlow(): CFlow<String> {
         return flow {
             while (currentCoroutineContext().isActive) {
                 emit(UUID.generate())
                 delay(500)
             }
-        }.flowOn(backgroundDispatcher)
+        }
+            .flowOn(backgroundDispatcher)
+            .wrap()
     }
 }

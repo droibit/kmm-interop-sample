@@ -6,17 +6,22 @@
 //  Copyright © 2021 orgName. All rights reserved.
 //
 
+import Combine
 import Foundation
 import Shared
+import CombineSchedulers
 
 class Dependencies {
-    let dispatcherProvider: DispatcherProvider
+    private let coroutinesDispatcherProvider: DispatcherProvider
     
     let sampleRepository: SampleRepository
     
+    let mainScheduler: AnySchedulerOf<DispatchQueue>
+    
     init() {
-        dispatcherProvider = DispatcherProvider()
-        sampleRepository = SampleRepositoryImpl(backgroundDispatcher: dispatcherProvider.computation)
+        coroutinesDispatcherProvider = DispatcherProvider()
+        sampleRepository = SampleRepositoryImpl(backgroundDispatcher: coroutinesDispatcherProvider.computation)
+        mainScheduler = DispatchQueue.main.eraseToAnyScheduler()
     }
 }
 
