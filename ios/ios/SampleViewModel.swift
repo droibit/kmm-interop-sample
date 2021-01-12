@@ -21,6 +21,8 @@ class SampleViewModel: ObservableObject {
     
     @Published var streamedUUID: String = "-"
     
+    @Published var isWatchingUUID: Bool = false
+    
     private var cancellables: Set<AnyCancellable> = []
     
     private var cancellableForStream: AnyCancellable? = nil
@@ -28,10 +30,6 @@ class SampleViewModel: ObservableObject {
     private var initialized: Bool = false
     
     private var getUUIDEventSink: PassthroughSubject<Void, Never>
-    
-    var isWatchingUUID: Bool {
-        cancellableForStream != nil
-    }
         
     init(sampleRepository: SampleRepository,
          mainScheduler: AnySchedulerOf<DispatchQueue>,
@@ -70,6 +68,8 @@ class SampleViewModel: ObservableObject {
     }
     
     func toggleWatchingUUID() {
+        defer { isWatchingUUID = cancellableForStream != nil }
+        
         if let cancellable = cancellableForStream {
             cancellable.cancel()
             cancellableForStream = nil
@@ -79,6 +79,41 @@ class SampleViewModel: ObservableObject {
         cancellableForStream = sampleRepository.getUUID()
             .receive(on: mainScheduler)
             .assign(to: \.streamedUUID, on: self)
+    }
+    
+    func printCrashMethod() {
+        do {
+            try sampleRepository.forceException()
+        } catch {
+            print("Catch Exception: \(error.localizedDescription)@\(type(of: error))")
+            
+            if let realError = error.kotlinThrowable {
+                print("Error type: \(type(of: realError))")
+            }
+        }
+        
+        do {
+            try sampleRepository.forceSampleApiException()
+        } catch {
+            print("Catch Exception: \(error.localizedDescription)")
+            
+            if let error = error.kotlinThrowable as? SampleApiException {
+                switch error {
+                case let realError as SampleApiException.Network:
+                    print("Error type: \(type(of: realError))")
+                case let realError as SampleApiException.Unauthorized:
+                    print("Error type: \(type(of: realError))")
+                default:
+                    break
+                }
+            }
+        }
+    }
+}
+
+extension Error {
+    var kotlinThrowable: KotlinThrowable? {
+        (self as NSError).kotlinException as? KotlinThrowable
     }
 }
 

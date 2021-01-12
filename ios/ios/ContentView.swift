@@ -29,6 +29,8 @@ struct ContentView: View {
                     action: viewModel.toggleWatchingUUID
                 ).padding(.all, 8)
             }
+            
+            Button("Call crashMethod", action: viewModel.printCrashMethod)
 
         }
         .onAppear(perform: viewModel.onAppear)

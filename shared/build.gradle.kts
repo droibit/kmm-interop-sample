@@ -19,6 +19,7 @@ kotlin {
             dependencies {
                 implementation("co.touchlab:stately-common:1.1.0")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2-native-mt")
+                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.1.1")
             }
         }
         val commonTest by getting {
