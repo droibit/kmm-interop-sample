@@ -21,15 +21,20 @@ interface SampleRepository {
     @Throws(SampleApiException::class)
     fun forceSampleApiException()
 
-    suspend fun getTask(): Task
+    suspend fun getTasks(): List<Task>
+
+    suspend fun getTask(id: String): Task?
+
+    suspend fun removeTask(id: String)
 }
 
 class SampleRepositoryImpl(
-    private val backgroundDispatcher: CoroutineDispatcher
+    private val backgroundDispatcher: CoroutineDispatcher,
+    private val taskDataSource: TaskDataSource = TaskDataSource()
 ) : SampleRepository {
 
     init {
-        ensureNeverFrozen()
+//        ensureNeverFrozen()
     }
 
     override suspend fun getUUID(): String {
@@ -43,7 +48,7 @@ class SampleRepositoryImpl(
     override fun getUUIDAsFlow(): CFlow<String> {
         return flow {
             while (currentCoroutineContext().isActive) {
-                printCurrentThreadName("getUUIDAsFlow")
+                printCurrentThreadName("getUUIDAsFlow(self.isFrozen${this@SampleRepositoryImpl.isFrozen})")
                 emit(UUID.generate())
                 delay(500)
             }
@@ -62,12 +67,21 @@ class SampleRepositoryImpl(
         throw SampleApiException.Network()
     }
 
-    override suspend fun getTask(): Task {
+    override suspend fun getTasks(): List<Task> {
         return withContext(backgroundDispatcher) {
-            Task(
-                id = UUID.generate(),
-                title = "KMM-Interop-Sample"
-            )
+            taskDataSource.getTasks()
+        }
+    }
+
+    override suspend fun getTask(id: String): Task? {
+        return withContext(backgroundDispatcher) {
+            taskDataSource.getById(id)
+        }
+    }
+
+    override suspend fun removeTask(id: String) {
+        return withContext(backgroundDispatcher) {
+            taskDataSource.removeById(id)
         }
     }
 }

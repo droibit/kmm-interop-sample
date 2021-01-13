@@ -17,7 +17,9 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("co.touchlab:stately-common:1.1.0")
+                val statelyVersion = "1.1.0"
+                implementation("co.touchlab:stately-common:1.1.1")
+                implementation("co.touchlab:stately-isolate:1.1.1-a1")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2-native-mt")
                 implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.1.1")
             }
