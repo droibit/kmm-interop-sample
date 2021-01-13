@@ -110,37 +110,3 @@ class SampleViewModel: ObservableObject {
         }
     }
 }
-
-extension Error {
-    var kotlinThrowable: KotlinThrowable? {
-        (self as NSError).kotlinException as? KotlinThrowable
-    }
-}
-
-// MARK: -
-
-extension SampleRepository {
-    func geUUIDAsSinle() -> AnyPublisher<String, Never> {
-        // No error occurs because it is a sample app.
-        Future { promise in
-            self.getUUID { uuid, error in
-                promise(.success(uuid!))
-            }
-        }.eraseToAnyPublisher()
-    }
-    
-    func getUUID() -> AnyPublisher<String, Never> {
-        let sink = PassthroughSubject<String, Never>()
-        let closable = self.getUUIDAsFlow().watch { uuid, throwable in
-            if let throwable = throwable {
-                print("error: \(throwable)")
-                return
-            }
-            sink.send(String(uuid!))
-        }
-        
-        return sink.handleEvents(receiveCancel: {
-            closable.close()
-        }).eraseToAnyPublisher()
-    }
-}

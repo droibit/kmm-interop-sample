@@ -1,6 +1,7 @@
 package com.example.kmm_interop.sample.shared
 
 import co.touchlab.stately.ensureNeverFrozen
+import co.touchlab.stately.isFrozen
 import com.example.kmm_interop.sample.shared.utils.CFlow
 import com.example.kmm_interop.sample.shared.utils.UUID
 import com.example.kmm_interop.sample.shared.utils.printCurrentThreadName
