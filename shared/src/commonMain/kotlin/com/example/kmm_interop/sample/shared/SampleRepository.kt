@@ -1,6 +1,5 @@
 package com.example.kmm_interop.sample.shared
 
-import co.touchlab.stately.ensureNeverFrozen
 import co.touchlab.stately.isFrozen
 import com.example.kmm_interop.sample.shared.utils.CFlow
 import com.example.kmm_interop.sample.shared.utils.UUID
@@ -25,10 +24,12 @@ interface SampleRepository {
 
     suspend fun getTask(id: String): Task?
 
+    suspend fun createTask(title: String): Task
+
     suspend fun removeTask(id: String)
 }
 
-class SampleRepositoryImpl(
+class SampleRepositoryImpl (
     private val backgroundDispatcher: CoroutineDispatcher,
     private val taskDataSource: TaskDataSource = TaskDataSource()
 ) : SampleRepository {
@@ -76,6 +77,12 @@ class SampleRepositoryImpl(
     override suspend fun getTask(id: String): Task? {
         return withContext(backgroundDispatcher) {
             taskDataSource.getById(id)
+        }
+    }
+
+    override suspend fun createTask(title: String): Task {
+        return withContext(backgroundDispatcher) {
+            taskDataSource.createTask(title)
         }
     }
 

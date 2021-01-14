@@ -21,7 +21,10 @@ class Dependencies {
     init() {
         coroutinesDispatcherProvider = DispatcherProvider()
         sampleRepository = SampleRepository(
-            repository: SampleRepositoryImpl(backgroundDispatcher: coroutinesDispatcherProvider.computation)
+            repository: SampleRepositoryImpl(
+                backgroundDispatcher: coroutinesDispatcherProvider.computation,
+                taskDataSource: TaskDataSource()
+            )
         )
         mainScheduler = DispatchQueue.main.eraseToAnyScheduler()
     }
