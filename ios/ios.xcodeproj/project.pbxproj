@@ -18,7 +18,10 @@
 		DA6A283125A7048400D00EDC /* Shared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6A283025A7048400D00EDC /* Shared.framework */; };
 		DA6A283225A7048400D00EDC /* Shared.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA6A283025A7048400D00EDC /* Shared.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DA79A3CB25A81C69001CA00F /* CombineSchedulers in Frameworks */ = {isa = PBXBuildFile; productRef = DA79A3CA25A81C69001CA00F /* CombineSchedulers */; };
-		DAAA546325AED00100483B86 /* SampleRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAA546225AED00100483B86 /* SampleRepository.swift */; };
+		DAA95B3E25B1484B00380FBF /* TaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA95B3D25B1484B00380FBF /* TaskView.swift */; };
+		DAA95B4425B1487F00380FBF /* TaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA95B4325B1487F00380FBF /* TaskViewModel.swift */; };
+		DAA95B4825B1705600380FBF /* Task+Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA95B4725B1705500380FBF /* Task+Identifiable.swift */; };
+		DAAA546325AED00100483B86 /* SampleRepositoryAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAA546225AED00100483B86 /* SampleRepositoryAdapter.swift */; };
 		DAAA546925AED6E100483B86 /* Error+KotlinThrowable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAA546825AED6E100483B86 /* Error+KotlinThrowable.swift */; };
 		DAD66BA425A6FBBA00D506B6 /* SampleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD66BA325A6FBBA00D506B6 /* SampleViewModel.swift */; };
 		DAD66BA825A6FC8B00D506B6 /* Dependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD66BA725A6FC8B00D506B6 /* Dependencies.swift */; };
@@ -71,7 +74,10 @@
 		DA4A368225AA1E52007E288E /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		DA6A282225A7004100D00EDC /* SampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleApp.swift; sourceTree = "<group>"; };
 		DA6A283025A7048400D00EDC /* Shared.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Shared.framework; path = "../shared/build/xcode-frameworks/Shared.framework"; sourceTree = "<group>"; };
-		DAAA546225AED00100483B86 /* SampleRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleRepository.swift; sourceTree = "<group>"; };
+		DAA95B3D25B1484B00380FBF /* TaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskView.swift; sourceTree = "<group>"; };
+		DAA95B4325B1487F00380FBF /* TaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewModel.swift; sourceTree = "<group>"; };
+		DAA95B4725B1705500380FBF /* Task+Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Task+Identifiable.swift"; sourceTree = "<group>"; };
+		DAAA546225AED00100483B86 /* SampleRepositoryAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleRepositoryAdapter.swift; sourceTree = "<group>"; };
 		DAAA546825AED6E100483B86 /* Error+KotlinThrowable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Error+KotlinThrowable.swift"; sourceTree = "<group>"; };
 		DAD66BA325A6FBBA00D506B6 /* SampleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleViewModel.swift; sourceTree = "<group>"; };
 		DAD66BA725A6FC8B00D506B6 /* Dependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dependencies.swift; sourceTree = "<group>"; };
@@ -128,12 +134,14 @@
 		7555FF7D242A565900829871 /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				DAA95B3C25B1483400380FBF /* Data */,
 				DA4A368125AA1E3F007E288E /* Utils */,
 				DAE8B24025A5BDFF0017A6AE /* Resources */,
 				7555FF82242A565900829871 /* ContentView.swift */,
 				DAD66BA325A6FBBA00D506B6 /* SampleViewModel.swift */,
 				DA6A282225A7004100D00EDC /* SampleApp.swift */,
-				DAAA546225AED00100483B86 /* SampleRepository.swift */,
+				DAA95B3D25B1484B00380FBF /* TaskView.swift */,
+				DAA95B4325B1487F00380FBF /* TaskViewModel.swift */,
 			);
 			path = ios;
 			sourceTree = "<group>";
@@ -178,8 +186,17 @@
 				DAD66BA725A6FC8B00D506B6 /* Dependencies.swift */,
 				DA4A368225AA1E52007E288E /* Utils.swift */,
 				DAAA546825AED6E100483B86 /* Error+KotlinThrowable.swift */,
+				DAA95B4725B1705500380FBF /* Task+Identifiable.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		DAA95B3C25B1483400380FBF /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				DAAA546225AED00100483B86 /* SampleRepositoryAdapter.swift */,
+			);
+			path = Data;
 			sourceTree = "<group>";
 		};
 		DAE8B24025A5BDFF0017A6AE /* Resources */ = {
@@ -355,11 +372,14 @@
 			files = (
 				DAAA546925AED6E100483B86 /* Error+KotlinThrowable.swift in Sources */,
 				DA4A368325AA1E52007E288E /* Utils.swift in Sources */,
-				DAAA546325AED00100483B86 /* SampleRepository.swift in Sources */,
+				DAAA546325AED00100483B86 /* SampleRepositoryAdapter.swift in Sources */,
 				DAD66BA425A6FBBA00D506B6 /* SampleViewModel.swift in Sources */,
 				DA6A282325A7004100D00EDC /* SampleApp.swift in Sources */,
+				DAA95B4825B1705600380FBF /* Task+Identifiable.swift in Sources */,
 				DAD66BA825A6FC8B00D506B6 /* Dependencies.swift in Sources */,
 				7555FF83242A565900829871 /* ContentView.swift in Sources */,
+				DAA95B4425B1487F00380FBF /* TaskViewModel.swift in Sources */,
+				DAA95B3E25B1484B00380FBF /* TaskView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

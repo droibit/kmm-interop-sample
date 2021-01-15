@@ -14,13 +14,13 @@ import CombineSchedulers
 class Dependencies {
     private let coroutinesDispatcherProvider: DispatcherProvider
     
-    let sampleRepository: SampleRepository
+    let sampleRepository: SampleRepositoryAdapter
     
     let mainScheduler: AnySchedulerOf<DispatchQueue>
     
     init() {
         coroutinesDispatcherProvider = DispatcherProvider()
-        sampleRepository = SampleRepository(
+        sampleRepository = SampleRepositoryAdapter(
             repository: SampleRepositoryImpl(
                 backgroundDispatcher: coroutinesDispatcherProvider.computation,
                 taskDataSource: TaskDataSource()

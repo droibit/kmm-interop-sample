@@ -6,33 +6,37 @@ struct ContentView: View {
     private var viewModel = SampleViewModel()
     
     var body: some View {
-        VStack(spacing: 32) {
-            VStack {
-                Text("UUID(Oneshot):")
-                    .font(.headline)
-                Text(viewModel.oneshotUUID)
-                    .font(.callout)
+        NavigationView {
+            VStack(spacing: 32) {
+                VStack {
+                    Text("UUID(Oneshot):")
+                        .font(.headline)
+                    Text(viewModel.oneshotUUID)
+                        .font(.callout)
 
-                Button("Refresh", action: viewModel.getUUID)
-                    .padding(.all, 8)
+                    Button("Refresh", action: viewModel.getUUID)
+                        .padding(.all, 8)
+                }
+                
+                VStack {
+                    Text("UUID(Streaming):")
+                        .font(.headline)
+                    Text(viewModel.streamedUUID)
+                        .font(.callout)
+
+                    Button(
+                        viewModel.isWatchingUUID ? "Stop" : "Start",
+                        action: viewModel.toggleWatchingUUID
+                    ).padding(.all, 4)
+                }
+                
+                Button("Call crashMethod", action: viewModel.printCrashMethod)
+                
+                NavigationLink("Show Tasks", destination: TaskView())
             }
-            
-            VStack {
-                Text("UUID(Streaming):")
-                    .font(.headline)
-                Text(viewModel.streamedUUID)
-                    .font(.callout)
-
-                Button(
-                    viewModel.isWatchingUUID ? "Stop" : "Start",
-                    action: viewModel.toggleWatchingUUID
-                ).padding(.all, 8)
-            }
-            
-            Button("Call crashMethod", action: viewModel.printCrashMethod)
-
+            .onAppear(perform: viewModel.onAppear)
+            .navigationBarTitle("Sample", displayMode: .inline)
         }
-        .onAppear(perform: viewModel.onAppear)
     }
 }
 

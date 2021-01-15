@@ -10,7 +10,7 @@ class TaskDataSource {
 
     fun getTasks(): List<Task> {
         return this.cache.access { cache ->
-            cache.values.sortedByDescending { it.createdAt }
+            cache.values.sortedByDescending { it.createdAtMills }
         }
     }
 

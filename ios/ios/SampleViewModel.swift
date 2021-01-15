@@ -13,7 +13,7 @@ import Shared
 
 class SampleViewModel: ObservableObject {
     
-    private let sampleRepository: SampleRepository
+    private let sampleRepository: SampleRepositoryAdapter
     
     private let mainScheduler: AnySchedulerOf<DispatchQueue>
     
@@ -29,9 +29,9 @@ class SampleViewModel: ObservableObject {
     
     private var initialized: Bool = false
     
-    private var getUUIDEventSink: PassthroughSubject<Void, Never>
+    private let getUUIDEventSink: PassthroughSubject<Void, Never>
         
-    init(sampleRepository: SampleRepository,
+    init(sampleRepository: SampleRepositoryAdapter,
          mainScheduler: AnySchedulerOf<DispatchQueue>,
          getUUIDEventSink: PassthroughSubject<Void, Never> = .init()) {
         self.sampleRepository = sampleRepository

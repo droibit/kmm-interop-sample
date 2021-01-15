@@ -1,12 +1,11 @@
 package com.example.kmm_interop.sample.shared
 
 import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
 
 data class Task(
     val id: String,
     val title: String,
-    val createdAt: Instant,
+    val createdAtMills: Long,
     val status: Status
 ) {
     enum class Status(val id: Int) {
@@ -14,6 +13,10 @@ data class Task(
         COMPLETED(id = 1)
     }
 
-    constructor(id: String, title: String) : this(id, title, Clock.System.now(), Status.ACTIVE)
+    constructor(id: String, title: String) : this(
+        id,
+        title,
+        Clock.System.now().toEpochMilliseconds(),
+        Status.ACTIVE
+    )
 }
-
