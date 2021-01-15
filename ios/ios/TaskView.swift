@@ -29,7 +29,7 @@ struct TaskView: View {
                 self.selectedTask = task
             }.alert(item: self.$selectedTask) { selectedTask in
                 Alert(title: Text(selectedTask.title),
-                      message: Text("Status: \(task.status)\nCreated at \(Self.dateFormatter.string(from: TimeInterval(task.createdAtMills)))"))
+                      message: Text("Status: \(task.status)\nCreated at \(Self.dateFormatter.string(from: TimeInterval(task.createdAtMillis)))"))
             }
         }
         .onAppear(perform: viewModel.onAppear)

@@ -5,7 +5,7 @@ import kotlinx.datetime.Clock
 data class Task(
     val id: String,
     val title: String,
-    val createdAtMills: Long,
+    val createdAtMillis: Long,
     val status: Status
 ) {
     enum class Status(val id: Int) {

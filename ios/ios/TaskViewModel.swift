@@ -69,7 +69,7 @@ class TaskViewModel: ObservableObject {
             }
             .receive(on: mainScheduler)
             .sink(receiveValue: { [unowned self] _ in
-                self.refreshTasksSink.send(())
+                self.refreshTasksSink.send()
             }).store(in: &cancellables)
                         
         refreshTasksSink

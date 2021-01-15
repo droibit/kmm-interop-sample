@@ -9,6 +9,4 @@
 import Shared
 
 extension Task: Identifiable {
-    
 }
-
